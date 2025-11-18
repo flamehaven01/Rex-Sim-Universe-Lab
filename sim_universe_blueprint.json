@@ -1,0 +1,343 @@
+{
+  "engine": "asdpi-ai",
+  "id": "REx.SimUniverseCorpus.v0.1",
+  "version": "0.1.0",
+  "metadata": {
+    "schema_version": "2.5.1",
+    "label": "SimUniverse Evidence Corpus & NNSL Experiment Blueprint",
+    "created_at": "2025-11-07T19:52:00+09:00",
+    "status": "draft",
+    "changelog": [
+      "0.1.0: Initial version — establishes a physics/philosophy corpus for simulation-hypothesis testing and an NNSL experiment schema (FQG/MToE, undecidable physics witnesses, simulation energy/astro constraints, MUH/CUH, Bostrom, KN-freedom lines)."
+    ],
+    "references_primary": [
+      {
+        "key": "Faizal2025_MToE",
+        "title": "Consequences of Undecidability in Physics on the Theory of Everything",
+        "authors": ["M. Faizal", "L. M. Krauss", "A. Shabir", "F. Marino"],
+        "year": 2025,
+        "source": "JHAP + arXiv",
+        "doi": "10.48550/arXiv.2507.22950",
+        "urls": [
+          "https://arxiv.org/abs/2507.22950",
+          "https://jhap.du.ac.ir/article_488.html"
+        ]
+      },
+      {
+        "key": "Cubitt2015_SpectralGap",
+        "title": "Undecidability of the Spectral Gap",
+        "authors": ["T. S. Cubitt", "D. Perez-Garcia", "M. M. Wolf"],
+        "year": 2015,
+        "source": "Nature 528, 207–211",
+        "doi": "10.1038/nature16059",
+        "urls": [
+          "https://www.nature.com/articles/nature16059",
+          "https://arxiv.org/abs/1502.04573"
+        ]
+      },
+      {
+        "key": "Watson2022_UncomputableRG",
+        "title": "Uncomputably complex renormalisation group flows",
+        "authors": ["J. D. Watson", "E. Onorati", "T. S. Cubitt"],
+        "year": 2022,
+        "source": "Nature Communications 13, 7618",
+        "doi": "10.1038/s41467-022-35179-4",
+        "urls": [
+          "https://www.nature.com/articles/s41467-022-35179-4",
+          "https://arxiv.org/abs/2102.05145"
+        ]
+      },
+      {
+        "key": "Vazza2025_AstroSimConstraints",
+        "title": "Astrophysical constraints on the simulation hypothesis for this Universe: why it is (nearly) impossible that we live in a simulation",
+        "authors": ["F. Vazza"],
+        "year": 2025,
+        "source": "arXiv + Frontiers in Physics",
+        "doi": "10.48550/arXiv.2504.08461",
+        "urls": [
+          "https://arxiv.org/abs/2504.08461",
+          "https://www.frontiersin.org/articles/10.3389/fphy.2025.1561873/full"
+        ]
+      },
+      {
+        "key": "Tegmark2008_MUH",
+        "title": "The Mathematical Universe",
+        "authors": ["M. Tegmark"],
+        "year": 2008,
+        "source": "Foundations of Physics 38, 101–150",
+        "doi": "10.1007/s10701-007-9186-9",
+        "urls": [
+          "https://arxiv.org/abs/0704.0646",
+          "https://link.springer.com/article/10.1007/s10701-007-9186-9"
+        ]
+      }
+    ]
+  },
+
+  "intent": {
+    "name": "sim-universe-evidence-blueprint",
+    "description": "Bundles Faizal MToE framing, undecidable physics, and simulation-hypothesis constraints (energy/information limits, MUH/CUH, Bostrom, etc.) into a single corpus and experiment schema to evaluate how algorithmic or simulatable our universe could be within the REx+NNSL stack.",
+    "tags": [
+      "rex-engine",
+      "sim-universe",
+      "toe",
+      "undecidability",
+      "simulation-hypothesis",
+      "muh",
+      "causal-finops",
+      "nnsl-lab"
+    ],
+    "tenant_scoping": true
+  },
+
+  "corpus": {
+    "clusters": [
+      {
+        "id": "core.faizal_mtoe",
+        "label": "Faizal MToE & Undecidability Core",
+        "description": "Claims arguing that the universe requires a non-algorithmic Meta-ToE.",
+        "papers": [
+          "Faizal2025_MToE"
+        ],
+        "concepts": [
+          "FQG (Formal Quantum Gravity)",
+          "MToE (Meta-Theory of Everything)",
+          "Non-algorithmic understanding",
+          "Truth predicate T(x)",
+          "Gödel/Tarski/Chaitin limits"
+        ],
+        "hypothesis_role": "anti_simulation_baseline"
+      },
+      {
+        "id": "witness.undecidable_physics",
+        "label": "Undecidable Physics Witness Library",
+        "description": "Collection of undecidable physics phenomena (spectral gaps, RG flows) used as test targets for simulators.",
+        "papers": [
+          "Cubitt2015_SpectralGap",
+          "Watson2022_UncomputableRG"
+        ],
+        "witnesses": [
+          {
+            "id": "spectral_gap_2d",
+            "source": "Cubitt2015_SpectralGap",
+            "type": "lattice_hamiltonian",
+            "note": "2D square lattice, translationally invariant, nearest-neighbour Hamiltonians with undecidable gap."
+          },
+          {
+            "id": "spectral_gap_1d",
+            "source": "Cubitt2015_SpectralGap",
+            "type": "lattice_hamiltonian",
+            "note": "1D variant (see follow-up work) simplified as a toy model for NNSL tests."
+          },
+          {
+            "id": "rg_flow_uncomputable",
+            "source": "Watson2022_UncomputableRG",
+            "type": "rg_map",
+            "note": "Each step is computable but the overall RG flow is uncomputable for certain many-body systems."
+          }
+        ]
+      },
+      {
+        "id": "constraints.astro_energy",
+        "label": "Astrophysical & Info-Energy Constraints",
+        "description": "Astrophysical and information-energy constraints that test whether a simulated universe is physically feasible.",
+        "papers": [
+          "Vazza2025_AstroSimConstraints"
+        ],
+        "concepts": [
+          "Information-energy link",
+          "Universe-scale simulation energy budget",
+          "Earth-only / low-res Earth simulation",
+          "Host universe parameter constraints"
+        ],
+        "hypothesis_role": "physical_feasibility_filter"
+      },
+      {
+        "id": "philo.simulation_muh",
+        "label": "Simulation Argument & Mathematical Universe",
+        "description": "Cluster covering Bostrom-style simulation arguments and Tegmark MUH/CUH computable-universe hypotheses.",
+        "papers": [
+          "Tegmark2008_MUH"
+        ],
+        "concepts": [
+          "Mathematical Universe Hypothesis (MUH)",
+          "Computable Universe Hypothesis (CUH)",
+          "Decidable structures only",
+          "Self-aware substructures (SAS)"
+        ],
+        "hypothesis_role": "pro_simulation_or_computable_universe"
+      }
+    ]
+  },
+
+  "experiment_schema": {
+    "version": "0.1.0",
+    "description": "Standard experiment schema linking simulators/TOE candidates with undecidable witnesses, energy constraints, and philosophical hypotheses inside the REx+NNSL environment.",
+    "types": {
+      "WorldSpec": {
+        "fields": {
+          "world_id": "string",
+          "toe_candidate_id": "string",
+          "host_model": "enum['algorithmic_host','mtoe_host','muh_cuh_host']",
+          "physics_modules": "string[]  // ex: ['lattice_hamiltonian','rg_flow','ca','qft']",
+          "resolution": "object  // spacetime lattice, energy cutoff, etc.",
+          "energy_budget": "object  // compute/energy budget for the host universe (reflecting Vazza-style constraints)",
+          "notes": "string"
+        }
+      },
+      "ToeQuery": {
+        "fields": {
+          "world_id": "string",
+          "witness_id": "string",
+          "question": "string  // ex: 'gap > 0?', 'phase(x0)?'",
+          "resource_budget": "object  // time, memory, precision, solver depth, etc.",
+          "solver_chain": "string[]  // ['approx_diag','tensor_network','symbolic_proof']"
+        }
+      },
+      "ToeResult": {
+        "fields": {
+          "status": "enum['decided_true','decided_false','undecided_resource','undecidable_theory']",
+          "approx_value": "number|null",
+          "confidence": "number  // [0,1], internal solver confidence",
+          "undecidability_index": "number  // [0,1], complexity/instability-based indicator",
+          "t_soft_decision": "enum['true','false','unknown']",
+          "t_oracle_called": "boolean",
+          "logs_ref": "string  // NNSL capsule/log id",
+          "metrics": {
+            "time_to_partial_answer": "number",
+            "complexity_growth": "number",
+            "sensitivity_to_resolution": "number"
+          }
+        }
+      }
+    },
+    "nnsl_binding": {
+      "service_name": "NNSL-NE-TOE-LAB",
+      "endpoints": [
+        {
+          "method": "POST",
+          "path": "/toe/world",
+          "request": "WorldSpec",
+          "response": "{ world_id: string }",
+          "desc": "Create an experimental world by combining a TOE candidate, host settings, and witness modules."
+        },
+        {
+          "method": "POST",
+          "path": "/toe/query",
+          "request": "ToeQuery",
+          "response": "ToeResult",
+          "desc": "Run an NNSL-based solver chain for a witness/question pair and record undecidability_index plus T_soft/T_oracle patterns."
+        }
+      ],
+      "semantic_mapping": {
+        "HashingQuantizer": "Hash/embed WorldSpec + ToeQuery into a fixed-dimensional vector",
+        "SemanticField": "Represent experiment settings and intermediate results as a continuous field (for complexity/sensitivity analysis)",
+        "Capsule": "State object clustering decidable, resource-bounded, and theoretically undecidable regions"
+      }
+    }
+  },
+
+  "toe_candidates": {
+    "schema_version": "0.1.0",
+    "candidates": [
+      {
+        "id": "toe_candidate_flamehaven",
+        "label": "Flamehaven TOE-AGI-UltraPlus / REx-QG family",
+        "type": "algorithmic_toe",
+        "status": "experimental",
+        "notes": "Algorithmic TOE candidate that combines TOE-AGI-UltraPlus, CosmoForge, Jetv@ QMM, and REx-QG modules.",
+        "host_model": "algorithmic_host"
+      },
+      {
+        "id": "toe_candidate_fqg_mtoe",
+        "label": "Faizal-style FQG/MToE Hybrid",
+        "type": "non_algorithmic_mtoe_model",
+        "status": "conceptual",
+        "notes": "Hybrid with algorithmic FQG and non-algorithmic MToE (truth predicate T(x) and R_nonalg), represented via T_oracle patterns in experiments.",
+        "host_model": "mtoe_host"
+      },
+      {
+        "id": "toe_candidate_muh_cuh",
+        "label": "Tegmark MUH + CUH Universe",
+        "type": "computable_math_universe",
+        "status": "conceptual",
+        "notes": "MUH/CUH-based simulated universe assuming all physical structures are computable/decidable.",
+        "host_model": "muh_cuh_host"
+      }
+    ]
+  },
+
+  "metrics_and_scoring": {
+    "version": "0.1.0",
+    "description": "Metrics that quantify how well each TOE/host combination handles undecidable witnesses and energy/information constraints.",
+    "metrics": {
+      "coverage_alg": "Fraction of undecidable witness queries with status ∈ {decided_true, decided_false}",
+      "coverage_meta": "Fraction with status == 'undecidable_theory' or t_oracle_called == true",
+      "undecidability_profile": "Distribution of undecidability_index across witnesses/parameter space",
+      "energy_feasibility_score": "[0,1] score for whether the host_model meets compute/energy budgets under Vazza-style constraints",
+      "simulation_plausibility": "Composite score based on coverage_alg * energy_feasibility_score plus MUH/CUH/non-simulation priors"
+    },
+    "aggregation": {
+      "window": "rolling 14d, step=1d",
+      "per_toe": [
+        "coverage_alg_14d",
+        "coverage_meta_14d",
+        "mean_undecidability_index_14d",
+        "energy_feasibility_14d"
+      ],
+      "global": [
+        "best_simulation_plausibility_toe",
+        "faizal_consistency_score",
+        "muh_cuh_consistency_score"
+      ]
+    }
+  },
+
+  "governance": {
+    "policy_version": "v2.1",
+    "lawbinder": {
+      "stage0_evidence_gate": {
+        "rules": [
+          "Reports claiming 'the universe cannot be simulated' without citing Faizal MToE are downgraded to evidence_score < 0.7.",
+          "Claims that 'the whole universe is simulatable' without Vazza-like astro/energy references are marked risk_profile = 'speculative'.",
+          "Declaring 'everything is computable' without Tegmark MUH/CUH or equivalent math-universe references sets meta_flag = 'unsupported_computability_claim'."
+        ]
+      },
+      "stage5_simulation_gate": {
+        "do": [
+          "Compute coverage_alg, coverage_meta, energy_feasibility, and simulation_plausibility per TOE candidate.",
+          "Produce Faizal consistency and MUH/CUH consistency scores in parallel.",
+          "Export results as REx Engine Stage-5 JSON evidence packages."
+        ],
+        "out": [
+          "simuniverse_eval_report.json",
+          "toe_rankings.json",
+          "undecidability_heatmaps/*.json"
+        ]
+      }
+    },
+    "finops_link": {
+      "fti_binding": "Use FTI v2 (blueprint-v2.5.1 canonical_formula) to monitor cost/performance of the NNSL experiment cluster.",
+      "targets": {
+        "fti_max": 1.05,
+        "coverage_alg_min": 0.6,
+        "energy_feasibility_min": 0.5
+      }
+    }
+  },
+
+  "execution_rules": {
+    "consistency_checks": [
+      "All witness_id values must exist in corpus.clusters['witness.undecidable_physics'].witnesses.",
+      "If ToeResult.status == 'undecidable_theory', then t_oracle_called must be true.",
+      "When computing energy_feasibility_score, reference Vazza2025_AstroSimConstraints parameters/scenarios.",
+      "simulation_plausibility must incorporate coverage_alg, coverage_meta, and energy_feasibility.",
+      "LawBinder Stage-0 evidence must cite at least one paper from core.faizal_mtoe or philo.simulation_muh clusters."
+    ],
+    "examples": [
+      "Faizal-consistent world: high coverage_meta (many undecidable regions) and energy_feasibility is irrelevant → supports a 'non-simulable universe' reading.",
+      "MUH/CUH-consistent world: very high coverage_alg and high energy_feasibility → supports an 'algorithmic/mathematical universe' reading.",
+      "Mixed world: mid-level coverage_alg and coverage_meta with undecidability_index spiking only in specific regions → suggests 'partly simulatable + partly non-algorithmic'."
+    ]
+  }
+}

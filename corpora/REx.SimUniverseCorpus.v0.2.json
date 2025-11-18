@@ -1,0 +1,166 @@
+{
+  "id": "REx.SimUniverseCorpus.v0.2",
+  "version": "0.2",
+  "description": "Simulation-universe corpus linking Faizal/Watson/Cubitt/Tegmark texts to TOE candidates and RG/spectral-gap witnesses.",
+  "papers": [
+    {
+      "id": "faizal_2017_simulation_argument",
+      "title": "Can the universe be simulated?",
+      "authors": ["M. Faizal"],
+      "year": 2017,
+      "venue": "Journal X",
+      "doi": "10.xxxx/xxxxx",
+      "tags": ["simulation_argument", "quantum_gravity", "impossibility"]
+    },
+    {
+      "id": "watson_2023_uncomputable_rg",
+      "title": "Uncomputable renormalization group flows",
+      "authors": ["G. Watson"],
+      "year": 2023,
+      "venue": "Journal Y",
+      "doi": "10.xxxx/yyyyy",
+      "tags": ["rg_flow", "uncomputability", "chaos"]
+    },
+    {
+      "id": "cubitt_2015_spectral_gap",
+      "title": "Undecidability of the spectral gap",
+      "authors": ["T. Cubitt", "D. Perez-Garcia", "M. Wolf"],
+      "year": 2015,
+      "venue": "Nature",
+      "doi": "10.1038/nature16059",
+      "tags": ["spectral_gap", "undecidability", "quantum_spin_systems"]
+    },
+    {
+      "id": "tegmark_2014_MUH",
+      "title": "Our Mathematical Universe",
+      "authors": ["M. Tegmark"],
+      "year": 2014,
+      "venue": "Book",
+      "doi": null,
+      "tags": ["MUH", "CUH", "multiverse", "simulation"]
+    }
+  ],
+  "claims": [
+    {
+      "id": "claim.faizal.no_simulation_via_uncertainty",
+      "paper_id": "faizal_2017_simulation_argument",
+      "type": "objection",
+      "section_label": "Sec. 3",
+      "location_hint": "pp. 10–12",
+      "summary": "Argues that quantum-gravity scale uncertainties prevent any exact simulation of the universe by another universe.",
+      "tags": ["simulation_limit", "uncertainty_bound"]
+    },
+    {
+      "id": "claim.watson.uncomputable_rg_flows",
+      "paper_id": "watson_2023_uncomputable_rg",
+      "type": "theorem",
+      "section_label": "Main Theorem",
+      "location_hint": "pp. 3–5",
+      "summary": "Constructs RG flows whose phase classification is formally uncomputable.",
+      "tags": ["rg_flow", "uncomputability"]
+    },
+    {
+      "id": "claim.cubitt.2d_spectral_gap_undecidable",
+      "paper_id": "cubitt_2015_spectral_gap",
+      "type": "theorem",
+      "section_label": "Main Result",
+      "location_hint": "pp. 2–4",
+      "summary": "Shows that deciding whether the spectral gap is zero for a family of 2D Hamiltonians is undecidable.",
+      "tags": ["spectral_gap", "undecidable"]
+    },
+    {
+      "id": "claim.tegmark.MUH_all_structures",
+      "paper_id": "tegmark_2014_MUH",
+      "type": "axiom",
+      "section_label": "Ch. 10",
+      "location_hint": "pp. 250–260",
+      "summary": "Postulates that all mathematical structures exist physically, implying every computable universe is realized.",
+      "tags": ["MUH", "existence_axiom"]
+    },
+    {
+      "id": "claim.tegmark.CUH_computable_only",
+      "paper_id": "tegmark_2014_MUH",
+      "type": "axiom",
+      "section_label": "Ch. 12",
+      "location_hint": "pp. 280–295",
+      "summary": "Introduces the Computable Universe Hypothesis, restricting reality to computable structures.",
+      "tags": ["CUH", "computability"]
+    }
+  ],
+  "toe_candidates": [
+    {
+      "id": "toe_candidate_faizal_mtoe",
+      "label": "Faizal-style non-simulable universe",
+      "assumptions": [
+        {
+          "claim_id": "claim.faizal.no_simulation_via_uncertainty",
+          "role": "support",
+          "weight": 0.9
+        },
+        {
+          "claim_id": "claim.watson.uncomputable_rg_flows",
+          "role": "support",
+          "weight": 0.6
+        },
+        {
+          "claim_id": "claim.tegmark.CUH_computable_only",
+          "role": "contest",
+          "weight": 0.8
+        }
+      ]
+    },
+    {
+      "id": "toe_candidate_muh_cuh",
+      "label": "Tegmark MUH/CUH computable multiverse",
+      "assumptions": [
+        {
+          "claim_id": "claim.tegmark.MUH_all_structures",
+          "role": "support",
+          "weight": 0.9
+        },
+        {
+          "claim_id": "claim.tegmark.CUH_computable_only",
+          "role": "support",
+          "weight": 0.8
+        },
+        {
+          "claim_id": "claim.cubitt.2d_spectral_gap_undecidable",
+          "role": "context",
+          "weight": 0.5
+        }
+      ]
+    },
+    {
+      "id": "toe_candidate_watson_rg",
+      "label": "Watson-style uncomputable RG TOE",
+      "assumptions": [
+        {
+          "claim_id": "claim.watson.uncomputable_rg_flows",
+          "role": "support",
+          "weight": 1.0
+        },
+        {
+          "claim_id": "claim.tegmark.CUH_computable_only",
+          "role": "contest",
+          "weight": 0.7
+        }
+      ]
+    },
+    {
+      "id": "toe_candidate_cubitt_gap",
+      "label": "Cubitt-style spectral-gap-based TOE",
+      "assumptions": [
+        {
+          "claim_id": "claim.cubitt.2d_spectral_gap_undecidable",
+          "role": "support",
+          "weight": 1.0
+        },
+        {
+          "claim_id": "claim.tegmark.CUH_computable_only",
+          "role": "contest",
+          "weight": 0.5
+        }
+      ]
+    }
+  ]
+}

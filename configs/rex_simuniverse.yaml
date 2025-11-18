@@ -1,0 +1,62 @@
+sim_universe:
+  enabled: true
+  corpus_id: "REx.SimUniverseCorpus.v0.1"
+
+  nnsl_endpoint:
+    base_url: "http://nnsl-toe-lab:8080"
+    timeout_seconds: 60
+
+  worlds:
+    default_toe_candidate: "toe_candidate_flamehaven"
+    default_host_model: "algorithmic_host"
+    default_resolution:
+      lattice_spacing: 0.1
+      time_step: 0.01
+      max_steps: 1000
+    default_energy_budget:
+      max_flops: 1e30
+      max_wallclock_seconds: 3600
+      notes: "Toy budget; adjust by cluster capacity and astro constraints."
+
+  astro_constraints:
+    universe_ops_upper_bound: 1e120
+    default_diag_cost_per_dim3: 10.0
+    default_rg_cost_per_step: 100.0
+    safety_margin: 10.0
+
+  witnesses:
+    include:
+      - "spectral_gap_2d"
+      - "rg_flow_uncomputable"
+
+  metrics:
+    enable_prometheus: true
+    labels:
+      tenant: "flamehaven"
+      service: "rex-simuniverse"
+      stage: "research"
+    histograms:
+      undecidability_index:
+        buckets: [0.0, 0.2, 0.4, 0.6, 0.8, 1.0]
+    exports:
+      - "simuniverse_coverage_alg"
+      - "simuniverse_coverage_meta"
+      - "simuniverse_energy_feasibility"
+      - "simuniverse_sim_plausibility"
+
+  governance:
+    stage0_evidence_gate:
+      min_evidence_score: 0.7
+      required_clusters:
+        - "core.faizal_mtoe"
+        - "philo.simulation_muh"
+
+    stage5_simulation_gate:
+      enabled: true
+      rules:
+        - "coverage_alg >= 0.6 OR coverage_meta >= 0.4"
+        - "energy_feasibility >= 0.5"
+
+  finops:
+    fti_target_max: 1.05
+    link_to_asdpi_blueprint: "blueprint-v2.5.1"
