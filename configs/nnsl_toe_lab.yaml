@@ -1,0 +1,25 @@
+nnsl_toe_lab:
+  service:
+    host: "0.0.0.0"
+    port: 8080
+
+  solvers:
+    spectral_gap:
+      backend: "numpy_eigvalsh"
+      max_system_size: 8
+      precision: 1e-6
+      max_iterations: 1
+
+    rg_flow:
+      backend: "logistic_map"
+      max_depth: 512
+      stop_if_fixed_point: true
+
+  logging:
+    level: "INFO"
+    json: true
+
+  observability:
+    prometheus:
+      enabled: true
+      path: "/metrics"
