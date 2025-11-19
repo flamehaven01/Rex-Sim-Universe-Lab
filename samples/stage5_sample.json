@@ -1,0 +1,30 @@
+{
+  "tenant": "flamehaven",
+  "service": "rex-simuniverse",
+  "stage": "stage5",
+  "run_id": "demo-stage5-run",
+  "simuniverse_summary": [
+    {
+      "toe_candidate_id": "toe_candidate_muh_cuh",
+      "world_id": "world-muh-001",
+      "mu_score": 0.82,
+      "faizal_score": 0.28,
+      "coverage_alg": 0.88,
+      "mean_undecidability_index": 0.32,
+      "energy_feasibility": 0.91,
+      "rg_phase_index": 0.15,
+      "rg_halting_indicator": 0.85
+    },
+    {
+      "toe_candidate_id": "toe_candidate_faizal_mtoe",
+      "world_id": "world-faizal-042",
+      "mu_score": 0.24,
+      "faizal_score": 0.86,
+      "coverage_alg": 0.34,
+      "mean_undecidability_index": 0.81,
+      "energy_feasibility": 0.18,
+      "rg_phase_index": 0.92,
+      "rg_halting_indicator": 0.18
+    }
+  ]
+}

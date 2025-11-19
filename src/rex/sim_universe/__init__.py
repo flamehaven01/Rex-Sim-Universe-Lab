@@ -21,6 +21,23 @@ from .reporting import (
     print_heatmap_with_evidence_markdown,
     format_evidence_markdown,
 )
+from .trust_integration import (
+    ToeTrustSummary,
+    build_toe_trust_summary,
+    compute_trust_tier_from_failures,
+    route_omega,
+    serialize_trust_summaries,
+    simuniverse_quality,
+    update_registry_with_trust,
+)
+from .stage5_loader import load_stage5_scores, Stage5SimUniversePayload
+from .registry import (
+    SimUniverseRunCreate,
+    SimUniverseRunRecord,
+    SimUniverseRunRegistry,
+    SimUniverseRunUpdate,
+)
+from .control_plane import run_stage5_for_run_id
 
 __all__ = [
     "WorldSpec",
@@ -39,4 +56,18 @@ __all__ = [
     "print_heatmap_with_evidence_markdown",
     "format_evidence_markdown",
     "EvidenceLink",
+    "ToeTrustSummary",
+    "build_toe_trust_summary",
+    "serialize_trust_summaries",
+    "simuniverse_quality",
+    "route_omega",
+    "update_registry_with_trust",
+    "compute_trust_tier_from_failures",
+    "load_stage5_scores",
+    "Stage5SimUniversePayload",
+    "SimUniverseRunCreate",
+    "SimUniverseRunRecord",
+    "SimUniverseRunRegistry",
+    "SimUniverseRunUpdate",
+    "run_stage5_for_run_id",
 ]

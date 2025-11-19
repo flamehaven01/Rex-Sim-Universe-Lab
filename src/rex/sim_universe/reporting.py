@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Dict, List, Mapping, Sequence
 
 from .corpus import AssumptionRole, SimUniverseCorpus
@@ -13,12 +13,12 @@ class ToeScenarioScores:
     world_id: str
     mu_score: float
     faizal_score: float
-    coverage_alg: float
-    mean_undecidability_index: float
-    energy_feasibility: float
-    rg_phase_index: float
-    rg_halting_indicator: float
-    evidence: List["EvidenceLink"]
+    coverage_alg: float = 0.0
+    mean_undecidability_index: float = 0.0
+    energy_feasibility: float = 0.0
+    rg_phase_index: float = 0.0
+    rg_halting_indicator: float = 0.0
+    evidence: List["EvidenceLink"] = field(default_factory=list)
 
 
 @dataclass
