@@ -66,7 +66,12 @@ def test_serialize_and_prometheus_helpers():
 
 
 def test_simuniverse_quality_and_omega_adjustment():
-    quality = simuniverse_quality(mu_score=0.9, faizal_score=0.1)
+    quality = simuniverse_quality(
+        mu_score=0.9,
+        faizal_score=0.1,
+        undecidability=0.6,
+        energy_feasibility=0.8,
+    )
     assert 0.0 <= quality <= 1.0
 
     omega = adjust_route_omega(base_omega=0.8, sim_quality=quality, trust_tier="normal")

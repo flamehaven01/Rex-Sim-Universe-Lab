@@ -150,13 +150,31 @@ def simuniverse_quality(
     mu_score: float,
     faizal_score: float,
     *,
-    mu_weight: float = 0.7,
+    undecidability: float | None = None,
+    energy_feasibility: float | None = None,
+    mu_weight: float = 0.4,
+    faizal_weight: float = 0.3,
+    undecidability_weight: float = 0.2,
+    energy_weight: float = 0.1,
 ) -> float:
-    """Combine MUH and Faizal scores into a single quality signal."""
+    """Combine MUH, Faizal, undecidability, and energy signals into one value."""
 
-    mu_weight = max(0.0, min(1.0, mu_weight))
-    faizal_weight = 1.0 - mu_weight
-    quality = mu_weight * mu_score + faizal_weight * (1.0 - faizal_score)
+    # Clamp weights to keep the computation predictable and normalise afterwards.
+    weights = [
+        max(0.0, mu_weight),
+        max(0.0, faizal_weight),
+        max(0.0, undecidability_weight),
+        max(0.0, energy_weight),
+    ]
+    total_weight = sum(weights) or 1.0
+    w_mu, w_f, w_u, w_e = [w / total_weight for w in weights]
+
+    q_mu = max(0.0, min(1.0, mu_score))
+    q_f = 1.0 - max(0.0, min(1.0, faizal_score))
+    q_u = 0.0 if undecidability is None else max(0.0, min(1.0, undecidability))
+    q_e = 0.0 if energy_feasibility is None else max(0.0, min(1.0, energy_feasibility))
+
+    quality = w_mu * q_mu + w_f * q_f + w_u * q_u + w_e * q_e
     return max(0.0, min(1.0, quality))
 
 

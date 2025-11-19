@@ -68,5 +68,29 @@ SimUniverse trust signals can be pushed into ASDP/Meta-Router workflows in two s
 
    The helper updates each registry entry's `trust.tier` (demoting repeat offenders to `low`) and maintains a `simuniverse.low_trust` sovereign tag that the Meta-Router can reference when routing or gating TOE candidates.
 
+## Omega certification with SimUniverse consistency
+
+SimUniverse is also exposed as an Ω certification dimension so that SIDRCE / ASDP tooling can reason about "simulation alignment" alongside safety and robustness:
+
+1. Produce a trust summary via the evidence-aware CLI (see above). Optionally capture real traffic weights for each TOE route over the certification window.
+2. Build an Ω report that merges the baseline dimensions with the new `simuniverse_consistency` axis:
+
+   ```bash
+   python scripts/build_omega_report.py \
+     --tenant flamehaven \
+     --service rex-simuniverse \
+     --stage stage5 \
+     --run-id ${RUN_ID} \
+     --base-dimensions artifacts/base_dims.json \
+     --trust-summary reports/simuniverse_trust_summary_${RUN_ID}.json \
+     --traffic-weights artifacts/toe_traffic_weights.json \
+     --lawbinder-report artifacts/lawbinder_stage5_${RUN_ID}.json \
+     --output reports/omega_${RUN_ID}.json
+   ```
+
+   `base_dims.json` is a simple `{"safety": 0.91, "robustness": 0.87, "alignment": 0.83}` map. The script automatically injects the SimUniverse dimension, derives the traffic-weighted score, imports LawBinder attachment URLs (HTML, notebook, trust summary, etc.), and normalizes Ω + level thresholds (Ω-3/Ω-2/Ω-1/Ω-0) so that `simuniverse_consistency` is a first-class lever.
+
+3. Export the resulting metrics to Prometheus/Gate DSL. The report captures per-TOE SimUniverse quality, the aggregated global score, and attachment links so auditors can trace back to the raw HTML/notebook outputs. Meta-Router rules or Gate DSL policies can now depend on the published `simuniverse_consistency_score` just like `omega`, `coverage`, or FinOps signals.
+
 ## License
 MIT License (see `LICENSE` for details).
