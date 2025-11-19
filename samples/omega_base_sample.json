@@ -1,0 +1,15 @@
+{
+  "omega_version": "8.1",
+  "tenant": "flamehaven",
+  "service": "rex-engine",
+  "run_id": "omega-demo-run",
+  "created_at": "2025-01-01T00:00:00Z",
+  "axes": {
+    "coverage": {"value": 0.91, "weight": 0.25},
+    "robustness": {"value": 0.87, "weight": 0.25},
+    "safety": {"value": 0.88, "weight": 0.25},
+    "finops": {"value": 0.85, "weight": 0.25}
+  },
+  "omega_total": 0.0,
+  "level": "fail"
+}
