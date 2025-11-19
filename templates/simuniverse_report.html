@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>REx SimUniverse Evidence-Aware Report</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background-color: #0b1020;
+      color: #f5f5f5;
+      margin: 0;
+      padding: 24px;
+    }
+    h1,
+    h2,
+    h3 {
+      margin-top: 0;
+    }
+    .page {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .card {
+      background-color: #111827;
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 24px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+    .grid {
+      display: grid;
+      gap: 16px;
+    }
+    .grid-2 {
+      grid-template-columns: 1.2fr 0.8fr;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      table-layout: fixed;
+    }
+    th,
+    td {
+      border: 1px solid #1f2937;
+      padding: 8px;
+      font-size: 13px;
+      text-align: center;
+      word-break: break-word;
+    }
+    th {
+      background-color: #111827;
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+    }
+    .badge-mu {
+      background-color: rgba(56, 189, 248, 0.15);
+      color: #67e8f9;
+    }
+    .badge-faizal {
+      background-color: rgba(251, 113, 133, 0.15);
+      color: #fecaca;
+    }
+    .heat-cell {
+      cursor: pointer;
+      transition: background-color 0.15s ease, transform 0.05s ease;
+    }
+    .heat-cell:hover {
+      transform: scale(1.03);
+    }
+    .heat-cell.selected {
+      outline: 2px solid #f97316;
+      outline-offset: -2px;
+    }
+    .small {
+      font-size: 11px;
+      color: #9ca3af;
+    }
+    .evidence-list {
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    .evidence-item {
+      margin-bottom: 8px;
+    }
+    .evidence-role {
+      font-size: 11px;
+      padding: 2px 6px;
+      border-radius: 999px;
+      background-color: #1f2937;
+      margin-right: 6px;
+    }
+    .evidence-role-support {
+      color: #6ee7b7;
+    }
+    .evidence-role-contest {
+      color: #fca5a5;
+    }
+    .evidence-role-context {
+      color: #bfdbfe;
+    }
+    .pill {
+      border-radius: 999px;
+      border: 1px solid #1f2937;
+      padding: 4px 10px;
+      font-size: 11px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .pill-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+  <div class="card">
+    <h1>REx SimUniverse Evidence-Aware Report</h1>
+    <p class="small">
+      This report summarizes MUH vs Faizal scores for each TOE candidate and world,
+      and attaches key textual evidence from Faizal / Watson / Cubitt / Tegmark papers.
+    </p>
+  </div>
+
+  <div class="grid grid-2">
+    <div class="card">
+      <h2>Heatmaps</h2>
+      <p class="small">
+        Click a cell to inspect detailed evidence and RG / spectral-gap metrics.
+      </p>
+
+      <h3>MUH score heatmap</h3>
+      <table>
+        <tr>
+          <th>TOE \ World</th>
+          {% for world in world_ids %}
+          <th>{{ world }}</th>
+          {% endfor %}
+        </tr>
+        {% for toe_id in toe_candidates %}
+        <tr>
+          <th>{{ toe_id }}</th>
+          {% for world in world_ids %}
+          {% set scenario = scenario_map.get(toe_id, {}).get(world) %}
+          {% if scenario %}
+          {% set score = scenario.mu_score %}
+          {% set shade = 0.15 + 0.6 * score %}
+          {% set bg = "rgba(56, 189, 248, " ~ ("%.3f"|format(shade)) ~ ")" %}
+          {% set text_color = "#0f172a" if score > 0.5 else "#e5e7eb" %}
+          <td class="heat-cell"
+              style="background-color: {{ bg }}; color: {{ text_color }};"
+              data-toe="{{ toe_id }}"
+              data-world="{{ world }}"
+              data-kind="mu">
+            {{ "%.3f"|format(score) }}
+            <div class="small">
+              ū={{ "%.2f"|format(scenario.mean_undecidability_index) }},
+              E={{ "%.2f"|format(scenario.energy_feasibility) }}
+            </div>
+          </td>
+          {% else %}
+          <td>-</td>
+          {% endif %}
+          {% endfor %}
+        </tr>
+        {% endfor %}
+      </table>
+
+      <h3 style="margin-top: 24px;">Faizal score heatmap</h3>
+      <table>
+        <tr>
+          <th>TOE \ World</th>
+          {% for world in world_ids %}
+          <th>{{ world }}</th>
+          {% endfor %}
+        </tr>
+        {% for toe_id in toe_candidates %}
+        <tr>
+          <th>{{ toe_id }}</th>
+          {% for world in world_ids %}
+          {% set scenario = scenario_map.get(toe_id, {}).get(world) %}
+          {% if scenario %}
+          {% set score = scenario.faizal_score %}
+          {% set shade = 0.15 + 0.6 * score %}
+          {% set bg = "rgba(251, 113, 133, " ~ ("%.3f"|format(shade)) ~ ")" %}
+          {% set text_color = "#111827" if score > 0.5 else "#e5e7eb" %}
+          <td class="heat-cell"
+              style="background-color: {{ bg }}; color: {{ text_color }};"
+              data-toe="{{ toe_id }}"
+              data-world="{{ world }}"
+              data-kind="faizal">
+            {{ "%.3f"|format(score) }}
+            <div class="small">
+              ū={{ "%.2f"|format(scenario.mean_undecidability_index) }},
+              E={{ "%.2f"|format(scenario.energy_feasibility) }}
+            </div>
+          </td>
+          {% else %}
+          <td>-</td>
+          {% endif %}
+          {% endfor %}
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+
+    <div class="card" id="detail-panel">
+      <h2>Selection details</h2>
+      <p class="small">Click any cell to view TOE, world, and evidence details.</p>
+      <div id="detail-body" class="small">No cell selected yet.</div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const scenarioJSON = {{ scenario_json | safe }};
+
+  function formatEvidence(evidence) {
+    if (!evidence || evidence.length === 0) {
+      return '<p class="small">No explicit evidence links found for this TOE candidate.</p>';
+    }
+    const lines = evidence.map((item) => {
+      const loc = item.section_label || item.location_hint || '';
+      const locLabel = loc ? `, ${loc}` : '';
+      const roleClass =
+        item.role === 'support'
+          ? 'evidence-role-support'
+          : item.role === 'contest'
+          ? 'evidence-role-contest'
+          : 'evidence-role-context';
+      return `
+        <div class="evidence-item">
+          <span class="evidence-role ${roleClass}">${item.role}</span>
+          <span class="small">w=${item.weight.toFixed(2)}</span><br/>
+          <strong>${item.paper_title}</strong>${locLabel}<br/>
+          <span class="small">${item.claim_summary}</span>
+        </div>
+      `;
+    });
+    return `<div class="evidence-list">${lines.join('')}</div>`;
+  }
+
+  function renderDetail(toeId, worldId) {
+    const key = `${toeId}::${worldId}`;
+    const scenario = scenarioJSON[key];
+    const panel = document.getElementById('detail-body');
+    if (!scenario) {
+      panel.innerHTML = '<p class="small">No data found for this selection.</p>';
+      return;
+    }
+
+    panel.innerHTML = `
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <div>
+            <h3 style="margin:0 0 6px 0;">${toeId}</h3>
+            <p class="small" style="margin:0;">World: <code>${worldId}</code></p>
+          </div>
+          <div style="display:flex; gap:8px;">
+            <span class="pill">
+              <span class="pill-dot" style="background-color:#22d3ee;"></span>
+              MUH ${scenario.mu_score.toFixed(3)}
+            </span>
+            <span class="pill">
+              <span class="pill-dot" style="background-color:#fb7185;"></span>
+              Faizal ${scenario.faizal_score.toFixed(3)}
+            </span>
+          </div>
+        </div>
+        <div class="small">
+          undecidability: ${scenario.mean_undecidability_index.toFixed(3)},
+          energy feasibility: ${scenario.energy_feasibility.toFixed(3)},
+          RG phase index: ${scenario.rg_phase_index.toFixed(2)},
+          RG halting indicator: ${scenario.rg_halting_indicator.toFixed(2)}
+        </div>
+        <div>
+          <h4 style="margin-bottom:6px;">Key evidence</h4>
+          ${formatEvidence(scenario.evidence)}
+        </div>
+      </div>
+    `;
+  }
+
+  function attachHandlers() {
+    const cells = document.querySelectorAll('.heat-cell');
+    cells.forEach((cell) => {
+      cell.addEventListener('click', () => {
+        cells.forEach((entry) => entry.classList.remove('selected'));
+        cell.classList.add('selected');
+        renderDetail(cell.dataset.toe, cell.dataset.world);
+      });
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', attachHandlers);
+</script>
+</body>
+</html>
