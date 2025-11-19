@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import asyncio
 import json
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Dict, List
 
@@ -13,6 +14,11 @@ except ImportError:  # pragma: no cover
 
 from rex.sim_universe.astro_constraints import AstroConstraintConfig, compute_energy_feasibility
 from rex.sim_universe.corpus import SimUniverseCorpus
+from rex.sim_universe.governance import (
+    build_trust_summaries,
+    format_prometheus_metrics,
+    serialize_trust_summaries,
+)
 from rex.sim_universe.models import (
     EnergyBudgetConfig,
     NNSLConfig,
@@ -175,6 +181,18 @@ def create_parser() -> argparse.ArgumentParser:
         help="Optional path for exporting a JSON payload suitable for the React dashboard.",
     )
     parser.add_argument(
+        "--trust-json",
+        dest="trust_output",
+        default=None,
+        help="Optional path for saving the aggregated trust summary JSON.",
+    )
+    parser.add_argument(
+        "--prom-metrics",
+        dest="prom_metrics_output",
+        default=None,
+        help="Optional path for writing Prometheus-formatted trust metrics.",
+    )
+    parser.add_argument(
         "--templates-dir",
         default="templates",
         help="Directory that stores Jinja2 templates for the HTML report.",
@@ -204,6 +222,8 @@ async def run_cli(
     html_path: str | None,
     notebook_path: str | None,
     react_path: str | None,
+    trust_path: str | None,
+    prom_metrics_path: str | None,
     templates_dir: str,
 ) -> None:
     if httpx is None:  # pragma: no cover - exercised during real CLI runs
@@ -276,6 +296,9 @@ async def run_cli(
 
     results: List[ToeScenarioScores] = await asyncio.gather(*tasks)  # type: ignore[arg-type]
 
+    run_id = datetime.now(timezone.utc).isoformat()
+    trust_summaries = build_trust_summaries(results)
+
     markdown = print_heatmap_with_evidence_markdown(results)
     emit_markdown(markdown, markdown_path)
 
@@ -291,6 +314,20 @@ async def run_cli(
         destination = export_react_payload(results, react_path)
         print(f"React payload saved to {destination}")
 
+    if trust_path:
+        trust_payload = serialize_trust_summaries(trust_summaries, run_id=run_id)
+        destination = Path(trust_path)
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        destination.write_text(json.dumps(trust_payload, indent=2), encoding="utf-8")
+        print(f"Trust summary saved to {destination}")
+
+    if prom_metrics_path:
+        metrics_body = format_prometheus_metrics(trust_summaries)
+        destination = Path(prom_metrics_path)
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        destination.write_text(metrics_body + "\n", encoding="utf-8")
+        print(f"Prometheus metrics saved to {destination}")
+
 
 def main() -> None:
     parser = create_parser()
@@ -303,6 +340,8 @@ def main() -> None:
             html_path=args.html_output,
             notebook_path=args.notebook_output,
             react_path=args.react_output,
+            trust_path=args.trust_output,
+            prom_metrics_path=args.prom_metrics_output,
             templates_dir=args.templates_dir,
         )
     )

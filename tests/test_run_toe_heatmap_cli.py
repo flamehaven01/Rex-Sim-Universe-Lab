@@ -15,6 +15,8 @@ def test_cli_parser_defaults():
     assert args.html_output is None
     assert args.notebook_output is None
     assert args.react_output is None
+    assert args.trust_output is None
+    assert args.prom_metrics_output is None
     assert args.templates_dir == "templates"
 
 
