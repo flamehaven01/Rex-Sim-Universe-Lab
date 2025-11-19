@@ -51,6 +51,78 @@ Notes:
 
 All outputs link each TOE/world cell with up to three high-weight claims (e.g., Faizal Sec. 3 or Tegmark Ch. 12) drawn from `REx.SimUniverseCorpus.v0.2`.
 
+## Omega + SimUniverse badges
+
+Display Ω certification data and SimUniverse trust signals consistently across dashboards or standalone HTML reports with the `OmegaSimUniverseHeader` React component:
+
+```tsx
+import { OmegaSimUniverseHeader } from "../ui/OmegaSimUniverseHeader";
+
+<OmegaSimUniverseHeader
+  tenant="flamehaven"
+  service="REx SimUniverse"
+  environment="prod"
+  omegaLevel="Ω-2"
+  omegaScore={0.864}
+  simUniverseScore={0.78}
+  simUniverseStatus="SimUniverse-Qualified"
+  lowTrustToeCount={1}
+  lastUpdatedIso="2025-11-18T13:45:00Z"
+/>;
+```
+
+Key details:
+
+1. Ω badge colors adapt to the level (Ω-3 violet/cyan gradient, Ω-2 indigo/sky, Ω-1 slate, Ω-0 muted slate).
+2. SimUniverse status badges support `SimUniverse-Uncertified`, `SimUniverse-Classical`, `SimUniverse-Qualified`, and `SimUniverse-Aligned` states.
+3. The header shows the normalized `simuniverse_consistency` score plus an optional low-trust warning if any TOE candidates are demoted.
+4. Tailwind classes are baked in so it can drop into the existing dashboard layout without extra wiring.
+
+If you need the same layout in a plain Jinja2/HTML context, reuse the inline-styled snippet below (swap in your values when rendering):
+
+```html
+<header style="width:100%;border-bottom:1px solid #1f2933;background-color:rgba(15,23,42,0.9);">
+  <div style="max-width:72rem;margin:0 auto;padding:0.75rem 1rem;display:flex;justify-content:space-between;align-items:center;gap:1rem;">
+    <div style="display:flex;flex-direction:column;gap:0.25rem;">
+      <div style="display:flex;align-items:center;gap:0.5rem;">
+        <h1 style="font-size:0.9rem;font-weight:600;color:#f9fafb;">REx SimUniverse</h1>
+        <span style="display:inline-flex;align-items:center;gap:0.25rem;border-radius:999px;border:1px solid #374151;padding:0.125rem 0.5rem;font-size:0.6rem;color:#e5e7eb;">
+          <span style="width:0.3rem;height:0.3rem;border-radius:999px;background-color:#34d399;"></span>
+          flamehaven
+        </span>
+        <span style="display:inline-flex;align-items:center;gap:0.25rem;border-radius:999px;background:#020617;padding:0.125rem 0.5rem;font-size:0.6rem;color:#e5e7eb;">
+          <span style="width:0.3rem;height:0.3rem;border-radius:999px;background-color:#38bdf8;"></span>
+          prod
+        </span>
+      </div>
+      <p style="font-size:0.6rem;color:#6b7280;">
+        Last Ω / SimUniverse certification update:
+        <time datetime="2025-11-18T13:45:00Z">2025-11-18T13:45:00Z</time>
+      </p>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:0.5rem;font-size:0.7rem;">
+      <div style="display:inline-flex;align-items:center;gap:0.25rem;border-radius:999px;padding:0.25rem 0.75rem;background:linear-gradient(to right,#4f46e5,#38bdf8);box-shadow:0 10px 25px rgba(0,0,0,0.6);color:#020617;">
+        <div style="display:flex;align-items:center;justify-content:center;width:1.25rem;height:1.25rem;border-radius:999px;background:rgba(15,23,42,0.4);font-size:0.6rem;font-weight:600;">Ω</div>
+        <span style="font-weight:600;">Ω-2</span>
+        <span style="margin-left:0.25rem;font-size:0.6rem;color:rgba(15,23,42,0.75);">0.864</span>
+      </div>
+      <div style="display:inline-flex;align-items:center;gap:0.25rem;border-radius:999px;border:1px solid rgba(34,197,235,0.6);padding:0.25rem 0.75rem;background:rgba(15,23,42,0.8);color:#a5f3fc;">
+        <span style="width:0.3rem;height:0.3rem;border-radius:999px;background-color:#22c55e;"></span>
+        <span style="font-weight:500;">SimUniverse-Qualified</span>
+      </div>
+      <div style="display:inline-flex;align-items:center;gap:0.25rem;border-radius:999px;background:#020617;padding:0.25rem 0.75rem;color:#e5e7eb;">
+        <span style="font-size:0.6rem;text-transform:uppercase;letter-spacing:0.05em;color:#9ca3af;">simuniverse_consistency</span>
+        <span style="font-family:monospace;font-size:0.75rem;">0.780</span>
+      </div>
+      <div style="display:inline-flex;align-items:center;gap:0.25rem;border-radius:999px;background:rgba(190,24,93,0.4);padding:0.25rem 0.75rem;color:#fecaca;">
+        <span style="display:flex;align-items:center;justify-content:center;width:1rem;height:1rem;border-radius:999px;background:#f97373;font-size:0.6rem;">!</span>
+        <span style="font-weight:500;">1 low-trust TOE</span>
+      </div>
+    </div>
+  </div>
+</header>
+```
+
 ## Governance and router integration
 
 SimUniverse trust signals can be pushed into ASDP/Meta-Router workflows in two steps:

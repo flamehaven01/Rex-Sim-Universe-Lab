@@ -29,3 +29,23 @@ export type HeatmapData = {
   faizal_scores: number[][];
   scenarios: Record<string, ToeScenario>;
 };
+
+export type OmegaLevel = "Ω-0" | "Ω-1" | "Ω-2" | "Ω-3";
+
+export type SimUniverseStatus =
+  | "SimUniverse-Uncertified"
+  | "SimUniverse-Classical"
+  | "SimUniverse-Qualified"
+  | "SimUniverse-Aligned";
+
+export type OmegaBadgeProps = {
+  tenant: string;
+  service: string;
+  environment: string;
+  omegaLevel: OmegaLevel;
+  omegaScore: number;
+  simUniverseScore: number;
+  simUniverseStatus: SimUniverseStatus;
+  lowTrustToeCount: number;
+  lastUpdatedIso?: string;
+};
