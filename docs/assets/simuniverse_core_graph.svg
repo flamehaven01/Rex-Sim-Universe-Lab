@@ -1,0 +1,36 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='720' height='480' viewBox='0 0 720 480'>
+<style>
+    text { font-family: "Liberation Sans", Arial, sans-serif; fill: #222; }
+    .axis { stroke: #333; stroke-width: 2; }
+    .grid { stroke: #cccccc; stroke-width: 1; stroke-dasharray: 4 4; }
+</style>
+<line class='grid' x1='60' y1='330.0' x2='660' y2='330.0' />
+<line class='grid' x1='210.0' y1='60' x2='210.0' y2='420' />
+<line class='grid' x1='60' y1='240.0' x2='660' y2='240.0' />
+<line class='grid' x1='360.0' y1='60' x2='360.0' y2='420' />
+<line class='grid' x1='60' y1='150.0' x2='660' y2='150.0' />
+<line class='grid' x1='510.0' y1='60' x2='510.0' y2='420' />
+<line class='axis' x1='60' y1='420' x2='660' y2='420' />
+<line class='axis' x1='60' y1='60' x2='60' y2='420' />
+<text x='360.0' y='465' text-anchor='middle' font-size='16'>MUH affinity (higher is better)</text>
+<text transform='rotate(-90 15 240.0)' x='15' y='240.0' text-anchor='middle' font-size='16'>Faizal obstruction (lower is better)</text>
+<text x='360.0' y='35' text-anchor='middle' font-size='20'>SimUniverse core evidence map</text>
+<text x='60.0' y='445' text-anchor='middle' font-size='12'>0.00</text>
+<text x='45' y='424.0' text-anchor='end' font-size='12'>0.00</text>
+<text x='210.0' y='445' text-anchor='middle' font-size='12'>0.25</text>
+<text x='45' y='334.0' text-anchor='end' font-size='12'>0.25</text>
+<text x='360.0' y='445' text-anchor='middle' font-size='12'>0.50</text>
+<text x='45' y='244.0' text-anchor='end' font-size='12'>0.50</text>
+<text x='510.0' y='445' text-anchor='middle' font-size='12'>0.75</text>
+<text x='45' y='154.0' text-anchor='end' font-size='12'>0.75</text>
+<text x='660.0' y='445' text-anchor='middle' font-size='12'>1.00</text>
+<text x='45' y='64.0' text-anchor='end' font-size='12'>1.00</text>
+<circle cx='552.0' cy='319.2' r='10' fill='#1f77b4' stroke='white' stroke-width='2'></circle>
+<text x='564.0' y='307.2' font-size='12' text-anchor='start'>toe_candidate_muh_cuh</text>
+<circle cx='204.0' cy='110.39999999999998' r='10' fill='#d62728' stroke='white' stroke-width='2'></circle>
+<text x='216.0' y='98.39999999999998' font-size='12' text-anchor='start'>toe_candidate_faizal_mtoe</text>
+<circle cx='540' cy='60' r='8' fill='#1f77b4' stroke='white' stroke-width='2'></circle>
+<text x='560' y='64' font-size='12' text-anchor='start'>Trusted/normal</text>
+<circle cx='540' cy='84' r='8' fill='#d62728' stroke='white' stroke-width='2'></circle>
+<text x='560' y='88' font-size='12' text-anchor='start'>Low-trust heuristic</text>
+</svg>
